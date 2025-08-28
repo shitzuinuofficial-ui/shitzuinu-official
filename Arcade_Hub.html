@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shitzu Inu Arcade</title>
+  <meta name="description" content="Play lightweight Shitzu Inu mini‑games across Arcade, Racing, Adventure, Hidden Items, and Puzzle categories. Login required (email + username)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0e0e10;            /* page background */
+      --panel:#16161a;         /* cards/panels */
+      --panel-2:#1e1e24;       /* alt panels */
+      --text:#f5f7fb;          /* primary text */
+      --muted:#a6a8ad;         /* secondary text */
+      --accent:#f5c518;        /* Shitzu gold accent */
+      --accent-2:#ffd74d;      /* lighter accent */
+      --border:#2a2a33;        /* borders */
+      --success:#22c55e;
+      --danger:#ef4444;
+      --radius:18px;
+      --shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;
+      color:var(--text);
+      background:radial-gradient(1200px 600px at 10% -10%, #1a1a1f, transparent),
+                 radial-gradient(800px 400px at 110% -20%, #17171c, transparent),
+                 var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1180px;margin:0 auto;padding:16px}
+
+    /* NAV */
+    header.nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:saturate(1.2) blur(8px);
+      background:linear-gradient(180deg, rgba(14,14,16,.9), rgba(14,14,16,.6));
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:40px;height:40px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-2), var(--accent));
+      box-shadow:0 0 0 3px rgba(245,197,24,.15), 0 10px 20px rgba(0,0,0,.35);
+    }
+    .title{font-weight:800;letter-spacing:.4px}
+    .badge{font-size:12px;color:#111;background:var(--accent);padding:4px 8px;border-radius:999px;margin-left:8px;font-weight:700}
+
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .btn{cursor:pointer;border:1px solid var(--border);background:var(--panel);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:600}
+    .btn:hover{border-color:#3a3a44}
+    .btn.primary{background:linear-gradient(180deg, var(--accent-2), var(--accent));color:#111;border:none}
+
+    /* HERO */
+    .hero{padding:28px 0}
+    .hero-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .hero-card{
+      background:linear-gradient(180deg, #19191f, #141419);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px
+    }
+    .hero h1{margin:6px 0 6px;font-size:28px;line-height:1.2}
+    .hero p{margin:0;color:var(--muted)}
+    .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .pill{border:1px solid var(--border);padding:6px 10px;border-radius:999px;color:var(--muted);font-size:12px}
+
+    .stats{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+    .stat{
+      flex:1;min-width:140px;background:var(--panel-2);border:1px solid var(--border);
+      padding:12px;border-radius:14px;text-align:center
+    }
+    .stat .big{font-size:22px;font-weight:800}
+    .stat .small{font-size:12px;color:var(--muted)}
+
+    /* FILTERS */
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+    .chip{cursor:pointer;padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:var(--panel-2);color:var(--muted);font-weight:600}
+    .chip.active{background:linear-gradient(180deg,#22222a,#1b1b22);color:var(--text);border-color:#3a3a44}
+
+    /* GRID */
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    @media (max-width:1024px){.hero-wrap{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:460px){.grid{grid-template-columns:1fr}}
+
+    .card{
+      background:linear-gradient(180deg,#18181e,#141419);border:1px solid var(--border);
+      border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column
+    }
+    .thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#1f1f27,#101015);display:flex;align-items:center;justify-content:center}
+    .thumb span{font-size:28px;opacity:.18}
+    .card-body{padding:12px}
+    .game-title{font-weight:700;margin:2px 0}
+    .meta{font-size:12px;color:var(--muted)}
+    .actions{display:flex;gap:8px;margin-top:12px}
+    .play{flex:1}
+    .play.btn{background:linear-gradient(180deg, var(--accent-2), var(--accent));color:#111;border:none}
+
+    /* LEADERBOARD */
+    .boards{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin:22px 0}
+    @media (max-width:1024px){.boards{grid-template-columns:1fr}}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    .panel h2{margin:0 0 12px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}
+    th{color:var(--muted);font-weight:600}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:18px 0;color:var(--muted);text-align:center}
+
+    /* AUTH MODAL */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}
+    .modal.open{display:flex}
+    .modal-card{width:100%;max-width:460px;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:16px 16px 18px;box-shadow:var(--shadow)}
+    .modal h3{margin:0 0 10px}
+    .row{display:flex;gap:8px}
+    .field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+    .input{padding:12px;border-radius:12px;background:#0f0f13;border:1px solid var(--border);color:var(--text)}
+    .hint{font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Shitzu Inu Arcade <span class="badge">BETA</span></div>
+          <div class="hint">Lightweight web games • Mobile & Desktop</div>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <button class="btn" id="btnLeaderboard">Leaderboard</button>
+        <button class="btn primary" id="btnLogin">Login / Register</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero container">
+    <div class="hero-wrap">
+      <div class="hero-card">
+        <h1>🎮 Welcome to the Shitzu Inu Arcade</h1>
+        <p>Play 50–100 lightweight mini‑games across Arcade, Racing, Hidden Items, Puzzle & more. Earn points and climb the global leaderboard. Public identity is <strong>username only</strong> — email stays private.</p>
+        <div class="pill-row">
+          <span class="pill">Mobile Optimized</span>
+          <span class="pill">One‑tap Controls</span>
+          <span class="pill">Fast Loading</span>
+          <span class="pill">Quarterly Top‑5 Rewards</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="big" id="statGames">12</div><div class="small">Games Ready</div></div>
+          <div class="stat"><div class="big" id="statPlayers">0</div><div class="small">Registered Players</div></div>
+          <div class="stat"><div class="big" id="statPoints">0</div><div class="small">Global Points (You)</div></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2 style="margin:4px 0 8px">How rewards work</h2>
+        <ul class="hint" style="margin:0 0 8px 18px;line-height:1.6">
+          <li>Play any game to earn <strong>Global Points</strong>.</li>
+          <li>Top‑5 players each season (quarterly) win tokens / collectibles.</li>
+          <li>Only <strong>username</strong> shows on leaderboards — emails are private.</li>
+        </ul>
+        <div class="pill-row">
+          <span class="pill">Global Leaderboard</span>
+          <span class="pill">Hall of Fame</span>
+          <span class="pill">Account Required</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- FILTERS -->
+    <div class="filters" id="filters">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="arcade">Arcade</button>
+      <button class="chip" data-filter="racing">Racing</button>
+      <button class="chip" data-filter="adventure">Adventure</button>
+      <button class="chip" data-filter="hidden">Hidden Items</button>
+      <button class="chip" data-filter="puzzle">Puzzle</button>
+      <button class="chip" data-filter="battle">Meme Battles</button>
+    </div>
+
+    <!-- GRID OF GAMES (placeholders you can replace/extend) -->
+    <div class="grid" id="gameGrid">
+      <!-- Arcade -->
+      <article class="card" data-cat="arcade">
+        <div class="thumb"><span>🐕</span></div>
+        <div class="card-body">
+          <div class="game-title">Shitzu Inu Runner</div>
+          <div class="meta">Arcade • Easy • Canvas</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/runner.html">Play</a>
+            <a class="btn" href="#" title="Details">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="arcade">
+        <div class="thumb"><span>🚀</span></div>
+        <div class="card-body">
+          <div class="game-title">Flappy Shitzu</div>
+          <div class="meta">Arcade • Tap to fly</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/flappy.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Hidden Items -->
+      <article class="card" data-cat="hidden">
+        <div class="thumb"><span>🔍</span></div>
+        <div class="card-body">
+          <div class="game-title">Hidden Bones</div>
+          <div class="meta">Hidden Items • Spot & tap</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/hidden-bones.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Racing -->
+      <article class="card" data-cat="racing">
+        <div class="thumb"><span>🏁</span></div>
+        <div class="card-body">
+          <div class="game-title">Shitzu Sprint</div>
+          <div class="meta">Racing • Side‑scroll</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/racing-sprint.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Puzzle -->
+      <article class="card" data-cat="puzzle">
+        <div class="thumb"><span>🧩</span></div>
+        <div class="card-body">
+          <div class="game-title">Paw Match‑3</div>
+          <div class="meta">Puzzle • Match to score</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/paw-match3.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Adventure -->
+      <article class="card" data-cat="adventure">
+        <div class="thumb"><span>🗺️</span></div>
+        <div class="card-body">
+          <div class="game-title">Island Fetch Quest</div>
+          <div class="meta">Adventure • Collect bones</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/island-fetch.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Battle -->
+      <article class="card" data-cat="battle">
+        <div class="thumb"><span>⚔️</span></div>
+        <div class="card-body">
+          <div class="game-title">Meme Dog Battles</div>
+          <div class="meta">Battle • Click to attack</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/meme-battles.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Duplicate placeholders to show grid density; swap with real games later -->
+      <article class="card" data-cat="arcade">
+        <div class="thumb"><span>🎯</span></div>
+        <div class="card-body">
+          <div class="game-title">Bone Dash</div>
+          <div class="meta">Arcade • Reflex</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/bone-dash.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="hidden">
+        <div class="thumb"><span>🕵️</span></div>
+        <div class="card-body">
+          <div class="game-title">Find the Paw</div>
+          <div class="meta">Hidden Items</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/find-the-paw.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="racing">
+        <div class="thumb"><span>🚗</span></div>
+        <div class="card-body">
+          <div class="game-title">Turbo Tails</div>
+          <div class="meta">Racing</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/turbo-tails.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="puzzle">
+        <div class="thumb"><span>🧠</span></div>
+        <div class="card-body">
+          <div class="game-title">Memory Bones</div>
+          <div class="meta">Puzzle • Memory</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/memory-bones.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="adventure">
+        <div class="thumb"><span>🌋</span></div>
+        <div class="card-body">
+          <div class="game-title">Volcano Run</div>
+          <div class="meta">Adventure</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/volcano-run.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="battle">
+        <div class="thumb"><span>🛡️</span></div>
+        <div class="card-body">
+          <div class="game-title">Arena Brawl</div>
+          <div class="meta">Meme Battles</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/arena-brawl.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="arcade">
+        <div class="thumb"><span>⏱️</span></div>
+        <div class="card-body">
+          <div class="game-title">Time Tapper</div>
+          <div class="meta">Arcade • Speed</div>
+          <div class="actions">
+            <a class="btn play" data-link="games/time-tapper.html">Play</a>
+            <a class="btn" href="#">Details</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- BOARDS -->
+    <section class="boards">
+      <div class="panel">
+        <h2>🏆 Global Leaderboard (Demo)</h2>
+        <table id="leaderboard">
+          <thead>
+            <tr><th>#</th><th>Username</th><th>Global Points</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h2>📣 Season</h2>
+        <p class="hint" id="seasonText">Quarterly season • Top‑5 winners receive tokens / collectibles.</p>
+        <button class="btn" id="btnHOF">Hall of Fame</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Shitzu Inu • Lightweight Web Arcade
+  </footer>
+
+  <!-- AUTH MODAL (email + username, no guests) -->
+  <div class="modal" id="authModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <h3>Login / Register</h3>
+        <button class="btn" id="closeAuth">✕</button>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input class="input" id="authEmail" type="email" placeholder="you@email.com" required />
+      </div>
+      <div class="field">
+        <label>Username (public)</label>
+        <input class="input" id="authUsername" minlength="3" maxlength="24" placeholder="ShitzuMaster" required />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input class="input" id="authPassword" type="password" placeholder="••••••••" required />
+        <div class="hint">Your <strong>email stays private</strong>. Only your username appears on leaderboards.</div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="btnLoginSubmit">Login</button>
+        <button class="btn primary" id="btnRegister">Register</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ======= UTIL: localStorage keys =======
+    const LS_USER = 'shitzu_user';       // {email, username}
+    const LS_PLAYERS = 'shitzu_players'; // demo leaderboard store [{username, points}]
+
+    // ======= INIT =======
+    const yearEl = document.getElementById('year');
+    yearEl.textContent = new Date().getFullYear();
+
+    const user = JSON.parse(localStorage.getItem(LS_USER) || 'null');
+    const players = JSON.parse(localStorage.getItem(LS_PLAYERS) || '[]');
+
+    const statPlayers = document.getElementById('statPlayers');
+    statPlayers.textContent = players.length.toString();
+
+    const statPoints = document.getElementById('statPoints');
+    statPoints.textContent = user?.points || 0;
+
+    // ======= FILTERS =======
+    document.getElementById('filters').addEventListener('click', (e)=>{
+      const btn = e.target.closest('.chip');
+      if(!btn) return;
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('#gameGrid .card').forEach(card=>{
+        const ok = (f==='all') || card.dataset.cat===f;
+        card.style.display = ok ? 'flex' : 'none';
+      });
+    });
+
+    // ======= AUTH MODAL =======
+    const modal = document.getElementById('authModal');
+    const openModal = ()=> modal.classList.add('open');
+    const closeModal = ()=> modal.classList.remove('open');
+
+    document.getElementById('btnLogin').addEventListener('click', openModal);
+    document.getElementById('closeAuth').addEventListener('click', closeModal);
+
+    // Login/Register demo (stores only locally for now)
+    document.getElementById('btnLoginSubmit').addEventListener('click', ()=>{
+      const email = document.getElementById('authEmail').value.trim();
+      const username = document.getElementById('authUsername').value.trim();
+      const password = document.getElementById('authPassword').value;
+      if(!email || !username || !password || username.length<3){
+        alert('Enter email, username (≥3 chars), and password.');
+        return;
+      }
+      const u = {email, username, points: 0};
+      localStorage.setItem(LS_USER, JSON.stringify(u));
+      closeModal();
+      refreshUser();
+      alert('Logged in as '+username+'. (Local demo only)');
+    });
+
+    document.getElementById('btnRegister').addEventListener('click', ()=>{
+      const email = document.getElementById('authEmail').value.trim();
+      const username = document.getElementById('authUsername').value.trim();
+      const password = document.getElementById('authPassword').value;
+      if(!email || !username || !password || username.length<3){
+        alert('Enter email, username (≥3 chars), and password.');
+        return;
+      }
+      // Add to demo players if not exists
+      const arr = JSON.parse(localStorage.getItem(LS_PLAYERS) || '[]');
+      if(!arr.find(p=>p.username.toLowerCase()===username.toLowerCase())){
+        arr.push({username, points: 0});
+        localStorage.setItem(LS_PLAYERS, JSON.stringify(arr));
+      }
+      localStorage.setItem(LS_USER, JSON.stringify({email, username, points: 0}));
+      closeModal();
+      refreshUser();
+      alert('Registered as '+username+'. (Local demo only)');
+    });
+
+    function refreshUser(){
+      const u = JSON.parse(localStorage.getItem(LS_USER) || 'null');
+      statPoints.textContent = u?.points || 0;
+      document.getElementById('statPlayers').textContent = (JSON.parse(localStorage.getItem(LS_PLAYERS) || '[]')).length;
+      document.getElementById('btnLogin').textContent = u? ('Signed in: '+u.username) : 'Login / Register';
+    }
+    refreshUser();
+
+    // ======= PLAY HANDLER (gate by login) =======
+    document.querySelectorAll('.play').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const u = JSON.parse(localStorage.getItem(LS_USER) || 'null');
+        if(!u){
+          e.preventDefault();
+          openModal();
+          return;
+        }
+        // If the target game page doesn't exist yet, show coming soon.
+        const link = btn.dataset.link;
+        if(!link){
+          e.preventDefault();
+          alert('Coming soon!');
+          return;
+        }
+        // Optional: simulate earning some points for demo if the file likely doesn't exist
+        // Prevent 404 during demo by intercepting and awarding sample points instead
+        if(link && !location.href.includes('allow-nav')){
+          e.preventDefault();
+          const gain = Math.floor(50 + Math.random()*250);
+          u.points = (u.points||0) + gain;
+          localStorage.setItem(LS_USER, JSON.stringify(u));
+          // also reflect on players array
+          const arr = JSON.parse(localStorage.getItem(LS_PLAYERS) || '[]');
+          const idx = arr.findIndex(p=>p.username.toLowerCase()===u.username.toLowerCase());
+          if(idx>-1){ arr[idx].points = (arr[idx].points||0)+gain; }
+          else { arr.push({username:u.username, points:gain}); }
+          localStorage.setItem(LS_PLAYERS, JSON.stringify(arr));
+          refreshUser();
+          buildLeaderboard();
+          alert('Demo: +'+gain+' points added to your Global Points! (Replace with real game later)');
+        }
+      })
+    });
+
+    // ======= LEADERBOARD (demo using localStorage) =======
+    function buildLeaderboard(){
+      const tbody = document.querySelector('#leaderboard tbody');
+      const arr = JSON.parse(localStorage.getItem(LS_PLAYERS) || '[]');
+      arr.sort((a,b)=>(b.points||0)-(a.points||0));
+      tbody.innerHTML = arr.slice(0,100).map((p,i)=>`<tr><td>${i+1}</td><td>${p.username}</td><td>${p.points||0}</td></tr>`).join('');
+    }
+    buildLeaderboard();
+
+    // Buttons
+    document.getElementById('btnLeaderboard').addEventListener('click', ()=>{
+      window.scrollTo({top:document.querySelector('.boards').offsetTop - 64, behavior:'smooth'});
+    });
+    document.getElementById('btnHOF').addEventListener('click', ()=>{
+      alert('Hall of Fame page coming soon. (Hook /hof.html)');
+    });
+  </script>
+</body>
+
+</html>

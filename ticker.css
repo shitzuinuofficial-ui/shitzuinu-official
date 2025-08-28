@@ -1,0 +1,24 @@
+/* ticker.css */
+/* 📰 Scrolling Crypto Ticker */
+
+.ticker {
+  width: 100%;
+  overflow: hidden;
+  background: #0a0a0a;
+  color: #0f0;
+  font-size: 1rem;
+  padding: 10px;
+  white-space: nowrap;
+  box-shadow: inset 0 -2px 8px rgba(0,255,0,0.3);
+}
+
+.ticker span {
+  display: inline-block;
+  padding-right: 50px;
+  animation: tickerScroll 15s linear infinite;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
