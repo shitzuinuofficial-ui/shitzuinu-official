@@ -22,12 +22,21 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 50px;
+    padding: 0 50px; /* optional: reduce vertical padding if needed */
     background-color: #111;
     box-shadow: 0 2px 15px rgba(0,0,0,0.3);
     position: sticky;
     top: 0;
     z-index: 1000;
+    position: relative; /* add this to allow absolute positioning */
+}
+
+.logo-name {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%; /* adjust size as needed */
 }
 
 header img {
