@@ -19,44 +19,46 @@ body {
 
 /* Header + Navigation */
 header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 50px; /* optional: reduce vertical padding if needed */
+    position: relative;
+    height: 100px; /* adjust header height */
     background-color: #111;
     box-shadow: 0 2px 15px rgba(0,0,0,0.3);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    position: relative; /* add this to allow absolute positioning */
 }
 
-.logo-name {
+/* Logo left */
+header .logo {
+    height: 100%; /* full header height */
+    float: left;
+    margin-left: 10px;
+}
+
+/* Name centered */
+header .name {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    height: 50%; /* adjust size as needed */
+    height: 60px;  /* adjust height as needed */
 }
 
-header img {
-    height: 80px;
-}
-
-.nav-links {
+/* Nav links at bottom of header */
+header .nav-links {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     list-style: none;
     display: flex;
-    margin: 0;
-    padding: 0;
     justify-content: center;
-    flex: 1;
+    margin: 0;
+    padding: 5px 0;
 }
 
-.nav-links li {
+header .nav-links li {
     margin: 0 15px;
 }
 
-.nav-links a {
+header .nav-links a {
     color: white;
     text-decoration: none;
     font-weight: 600;
@@ -66,7 +68,6 @@ header img {
     transition: all 0.3s ease;
 }
 
-/* Smooth purple top glow */
 .nav-links a::before {
     content: '';
     position: absolute;
@@ -97,12 +98,15 @@ header img {
     font-size: 1.5rem;
     color: white;
     cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 @media (max-width: 768px) {
     header {
-        flex-direction: column;
-        align-items: flex-start;
+        height: auto;
         padding: 15px 20px;
     }
     .nav-links {
@@ -118,7 +122,6 @@ header img {
     }
     .menu-btn {
         display: block;
-        margin-left: auto;
     }
 }
 
@@ -133,44 +136,11 @@ header img {
     text-align: center;
 }
 
-/* Brand Logo & Name */
+/* Brand Name Image */
 .shitzuinu-name {
-    font-family: 'Pacifico', cursive;
-    font-size: 8vw;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-}
-
-.shitzuinu-name span {
-    margin: 0 2px;
-    animation: glow 1.5s infinite alternate;
-    font-weight: bold;
-}
-
-.shitzuinu-name span:nth-child(1) { color: #ff0055; text-shadow: 0 0 5px #ff0055, 0 0 10px #ff66aa; }
-.shitzuinu-name span:nth-child(2) { color: #ff8800; text-shadow: 0 0 5px #ff8800, 0 0 10px #ffaa44; }
-.shitzuinu-name span:nth-child(3) { color: #ffee00; text-shadow: 0 0 5px #ffee00, 0 0 10px #ffff66; }
-.shitzuinu-name span:nth-child(4) { color: #00ff55; text-shadow: 0 0 5px #00ff55, 0 0 10px #66ffaa; }
-.shitzuinu-name span:nth-child(5) { color: #00aaff; text-shadow: 0 0 5px #00aaff, 0 0 10px #66ddff; }
-.shitzuinu-name span:nth-child(6) { color: #aa00ff; text-shadow: 0 0 5px #aa00ff, 0 0 10px #dd66ff; }
-.shitzuinu-name span:nth-child(7) { color: #ff0066; text-shadow: 0 0 5px #ff0066, 0 0 10px #ff66aa; }
-.shitzuinu-name span:nth-child(8) { color: #ffaa00; text-shadow: 0 0 5px #ffaa00, 0 0 10px #ffcc55; }
-.shitzuinu-name span:nth-child(9) { color: #00ffaa; text-shadow: 0 0 5px #00ffaa, 0 0 10px #66ffdd; }
-
-@keyframes glow {
-    0% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor; }
-    50% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor; }
-    100% { text-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 40px currentColor; }
-}
-
-/* Tagline */
-.tagline {
-    font-family: 'Pacifico', cursive;
-    font-size: 2.5vw;
-    color: #00ffff;
-    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
-    margin: 20px 0;
 }
 
 /* Ticker */
@@ -231,8 +201,8 @@ footer {
 <body>
 
 <header>
-    <img src="shitzuInuLogo.png" alt="ShitzuInu Logo">
-    <img src="shitzuInuname.png" alt="ShitzuInu Name" class="logo-name">
+    <img src="shitzuInuLogo.png" alt="ShitzuInu Logo" class="logo">
+    <img src="shitzuInuname.png" alt="ShitzuInu Name" class="name">
     <ul class="nav-links">
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#token">Token</a></li>
@@ -249,9 +219,6 @@ footer {
 
 <section class="hero">
     <img src="hero_image.png" alt="ShitzuInu Hero">
-    <h1 class="shitzuinu-name">
-        <span>S</span><span>h</span><span>i</span><span>t</span><span>z</span><span>u</span><span>I</span><span>n</span><span>u</span>
-    </h1>
 </section>
 
 <div class="meme-line" id="meme-line"></div>
