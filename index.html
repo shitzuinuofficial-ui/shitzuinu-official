@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ShitzuInu</title>
+
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <!-- Font Awesome -->
@@ -16,7 +17,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: #111;
     color: white;
-    padding-top: 120px; /* header height */
+    padding-top: 120px;
 }
 
 /* Header */
@@ -29,13 +30,18 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 15px 50px;
-    background-color: #111;
+    background: linear-gradient(90deg, #111, #1a1a1a);
     box-shadow: 0 2px 15px rgba(0,0,0,0.3);
 }
 
 header img.logo {
     max-height: 100px;
     width: auto;
+    transition: transform 0.2s ease-in-out;
+}
+
+header img.logo:hover {
+    transform: scale(1.05);
 }
 
 header img.name {
@@ -55,13 +61,12 @@ header img.name {
 }
 
 .nav-links a {
-    color: white;
+    color: #00ffcc;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s;
     position: relative;
     padding: 5px 0;
-    transition: all 0.3s;
 }
 
 .nav-links a::before {
@@ -113,10 +118,9 @@ header img.name {
 /* Ticker */
 .ticker {
     width: 100%;
+    overflow: hidden;
     background: linear-gradient(145deg, #222, #000);
     color: #d4d4d4;
-    overflow: hidden;
-    white-space: nowrap;
     padding: 10px 0;
     font-weight: bold;
     margin-bottom: 30px;
@@ -143,26 +147,24 @@ header img.name {
 
 /* Footer */
 footer {
-    text-align: center;
+    background: #111;
+    color: #999;
     padding: 20px;
-    background-color: #111;
-    color: white;
+    text-align: center;
+    font-size: 0.9rem;
     border-top: 1px solid #222;
 }
 
-footer .social-links {
-    margin-bottom: 10px;
-}
-
-footer .social-links a {
-    color: white;
+footer a {
+    color: #00ffcc;
+    text-decoration: none;
     margin: 0 10px;
     font-size: 1.5rem;
     transition: all 0.3s;
 }
 
-footer .social-links a:hover {
-    color: #bb00ff;
+footer a:hover {
+    color: #ff00ff;
     text-shadow: 0 0 5px #bb00ff,0 0 10px #bb00ff;
 }
 
@@ -172,7 +174,6 @@ footer .social-links a:hover {
     padding: 20px;
 }
 
-/* Active page */
 .page.active {
     display: block;
 }
@@ -201,7 +202,7 @@ button:hover {
     max-width: 400px;
 }
 
-/* Terms & Conditions */
+/* Terms */
 #terms-page textarea {
     width: 100%;
     height: 400px;
@@ -210,6 +211,44 @@ button:hover {
     border: 1px solid #444;
     padding: 10px;
     resize: none;
+}
+
+/* Achievements / Token Cards */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #bb00ff;
+}
+
+/* Mini Games Card */
+.mini-game-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 15px;
+    width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mini-game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #bb00ff;
 }
 
 /* Responsive */
@@ -239,6 +278,11 @@ button:hover {
     .hero {
         width: 90%;
     }
+
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 </style>
 </head>
@@ -246,49 +290,88 @@ button:hover {
 
 <!-- Header -->
 <header>
-    <img src="shitzuInuLogo.png" alt="ShitzuInu Logo" class="logo">
-    <img src="shitzuInuname.png" alt="ShitzuInu Name" class="name">
+    <img src="shitzuInuLogo.png" alt="Logo" class="logo">
+    <img src="shitzuInuname.png" alt="Name" class="name">
     <ul class="nav-links">
         <li><a href="#" class="active" data-page="home-page">Home</a></li>
-        <li><a href="#" data-page="token-page">Token</a></li>
-        <li><a href="#" data-page="minigames-page">Mini Games</a></li>
+        <li><a href="#" data-page="mini-games-page">Mini Games</a></li>
         <li><a href="#" data-page="trade-page">Trade</a></li>
-        <li><a href="#" data-page="kyc-page">KYC</a></li>
-        <li><a href="#" data-page="achievements-page" id="achievements-tab" style="display:none;">Achievements</a></li>
+        <li><a href="#" data-page="achievements-page">Achievements</a></li>
     </ul>
     <div class="menu-btn"><i class="fas fa-bars"></i></div>
 </header>
 
 <!-- Pages -->
+
+<!-- Home -->
 <div id="home-page" class="page active">
-    <!-- Ticker -->
     <div class="ticker">
         <p id="ticker-content">Loading crypto prices...</p>
     </div>
-    <!-- Hero -->
     <section class="hero">
-        <img src="hero_image.png" alt="ShitzuInu Hero">
+        <img src="hero_image.png" alt="Hero Image">
     </section>
-    <!-- Meme/Tagline -->
     <div class="meme-line" id="meme-line"></div>
 </div>
 
+<!-- Mini Games -->
+<div id="mini-games-page" class="page">
+    <h2>Mini Games</h2>
+    <div class="card-container">
+        <div class="mini-game-card" onclick="window.location.href='Arcade_Hub.html'">
+            <h3>Arcade Hub</h3>
+            <p>Play all games in one place!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Trade -->
+<div id="trade-page" class="page">
+    <h2>Trade</h2>
+    <p>Buy/Sell
+<div id="trade-page" class="page">
+    <h2>Trade</h2>
+    <div class="card-container">
+        <div class="card">
+            <h3>Buy ShitzuInu</h3>
+            <p>Instantly buy SHINU tokens</p>
+            <button onclick="alert('Buy functionality coming soon')">Buy</button>
+        </div>
+        <div class="card">
+            <h3>Sell ShitzuInu</h3>
+            <p>Sell your SHINU tokens safely</p>
+            <button onclick="alert('Sell functionality coming soon')">Sell</button>
+        </div>
+    </div>
+</div>
+
+<!-- Achievements -->
+<div id="achievements-page" class="page">
+    <h2>Achievements</h2>
+    <div class="card-container">
+        <div class="card">
+            <h3>First HODL</h3>
+            <p>Hold your first SHINU tokens</p>
+        </div>
+        <div class="card">
+            <h3>Moon Walker</h3>
+            <p>Participated in first token pump</p>
+        </div>
+        <div class="card">
+            <h3>Referral Star</h3>
+            <p>Invited first 5 users</p>
+        </div>
+        <!-- Add more token cards here as needed -->
+    </div>
+</div>
+
+<!-- Login / Terms Placeholder -->
 <div id="login-page" class="page">
     <h2>Login</h2>
     <input type="text" placeholder="Username / Wallet / Email" id="login-user">
     <input type="password" placeholder="Password" id="login-pass">
     <input type="text" placeholder="Referral ID (optional)" id="login-referral">
     <button id="login-btn">Login</button>
-</div>
-
-<div id="influencer-dashboard" class="page">
-    <h2>Influencer Dashboard</h2>
-    <p>Welcome, influencer! Your referral stats will appear here.</p>
-</div>
-
-<div id="user-dashboard" class="page">
-    <h2>User Dashboard</h2>
-    <p>Welcome! Your token holdings and referrals appear here.</p>
 </div>
 
 <div id="terms-page" class="page">
@@ -311,6 +394,7 @@ button:hover {
     <p>© 2025 ShitzuInu. All rights reserved.</p>
 </footer>
 
+<!-- Scripts -->
 <script>
 // Mobile menu toggle
 const menuBtn = document.querySelector('.menu-btn');
@@ -360,7 +444,6 @@ const taglines = [
     "💹 Pump, Laugh, Repeat with ShitzuInu!",
     "🎊 The Meme Revolution: ShitzuInu!"
 ];
-
 const memeLineEl = document.getElementById('meme-line');
 let i=0;
 function changeTagline(){
@@ -381,16 +464,16 @@ termsTextarea.addEventListener('scroll', () => {
         acceptBtn.disabled = false;
     }
 });
-
-// Accept terms button
 acceptBtn.addEventListener('click', () => {
     alert("Terms accepted! Proceed to login.");
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('login-page').classList.add('active');
 });
+
+// AI Assistant
+const aiBtn = document.getElementById("ai-assistant");
+aiBtn.addEventListener("click", () => alert("AI Assistant placeholder"));
 </script>
 
 </body>
 </html>
-
-
