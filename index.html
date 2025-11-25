@@ -3,495 +3,145 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ShitzuInu — Neon Glow</title>
+<title>ShitzuInu — Home</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-/* ===========================================
-   GLOBAL NEON THEME (FULL SITE)
-=========================================== */
 :root{
   --bg: #150022;
-  --card: linear-gradient(180deg, rgba(30,1,44,0.85), rgba(15,0,25,0.95));
   --panel: #1b0629;
   --accent: #ff2dfb;
   --accent2: #9b4dff;
   --text: #ffffff;
-  --muted: #ffcffc;
+  --muted: #ffd6ff;
   --cta: linear-gradient(90deg, #ff2dfb, #9b4dff);
-  --glow: rgba(255,45,251,0.45);
+  --glow: rgba(255,45,251,0.35);
 }
 
-html,body{
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Montserrat', sans-serif;
-}
+/* base */
+html,body{ height:100%; margin:0; background:var(--bg); color:var(--text); font-family: 'Montserrat', sans-serif; -webkit-font-smoothing:antialiased;}
+a{ color:inherit; text-decoration:none; }
 
-/* ===========================================
-   NAVBAR (Neon Pink)
-=========================================== */
+/* NAV */
 .navbar{
-  position:fixed;
-  top:0; left:0; right:0;
-  height:72px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 24px;
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(6px);
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  z-index:1000;
+  position:fixed; top:0; left:0; right:0; height:72px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px; box-sizing:border-box;
+  background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(255,255,255,0.04); z-index:1000;
 }
-.logo{
-  height:52px;
-}
-.nav-links{
-  list-style:none;
-  display:flex;
-  gap:22px;
-}
-.nav-links a{
-  color:var(--accent);
-  font-weight:700;
-  transition:0.2s;
-}
-.nav-links a:hover{
-  color:var(--accent2);
-  text-shadow:0 0 12px var(--glow);
-}
+.nav-left { display:flex; align-items:center; gap:12px; }
+.logo { height:48px; width:auto; display:block; }
+.nav-links { display:flex; gap:16px; list-style:none; margin:0; padding:0; align-items:center; }
+.nav-links a { color:var(--accent); font-weight:700; padding:8px 10px; border-radius:8px; transition:all .15s; }
+.nav-links a:hover { color:var(--accent2); text-shadow:0 6px 18px var(--glow); transform:translateY(-2px); }
 
-/* ===========================================
-   GENERAL SECTIONS / PANELS
-=========================================== */
-main{
-  padding-top:95px;
-  max-width:1200px;
-  margin:auto;
-}
-section{
-  margin:26px 16px;
-  padding:22px;
-  border-radius:14px;
-  background:var(--panel);
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 8px 48px var(--glow);
-}
+/* main */
+main { padding-top:100px; max-width:1100px; margin:0 auto; padding-left:16px; padding-right:16px; }
 
-/* ===========================================
-   HERO
-=========================================== */
-.hero{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:24px;
-  text-align:center;
+/* HERO */
+.hero {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:20px; padding:56px 18px; border-radius:14px; margin-top:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.03); box-shadow: 0 16px 60px var(--glow);
 }
-.hero-img{
-  width:250px;
-  border-radius:14px;
-  box-shadow:0 12px 48px var(--glow);
-}
-.hero h1{
-  font-family:'Luckiest Guy';
-  color:var(--accent);
-  font-size:48px;
-  margin:0;
-}
-.hero p{
-  margin:10px 0 0 0;
-  color:var(--muted);
-}
-
-/* CTA Buttons */
-.btn{
-  padding:12px 20px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:800;
-  color:#150022;
-  background:var(--cta);
-  box-shadow:0 8px 22px var(--glow);
-}
-.btn:hover{
-  transform:scale(1.05);
-}
-
-/* ===========================================
-   TOKEN CARDS
-=========================================== */
-.token-cards{
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.token-card{
-  width:210px;
-  padding:16px;
-  border-radius:14px;
-  background:var(--card);
-  text-align:center;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 10px 38px var(--glow);
-}
-.token-card h3{
-  color:var(--accent);
-  margin:0;
-}
-.token-card p{
-  margin:10px 0 0 0;
-  color:var(--muted);
-}
-
-/* ===========================================
-   MINT
-=========================================== */
-.mint-form{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-}
-.mint-form input{
-  padding:12px;
-  border-radius:10px;
-  background:#270036;
-  border:1px solid rgba(255,255,255,0.1);
-  color:white;
-  width:220px;
-}
-
-/* ===========================================
-   STAKING (Neon Everywhere)
-=========================================== */
-
-.staking-wrap{
-  display:flex;
-  flex-wrap:wrap;
-  gap:20px;
-  justify-content:center;
-}
-
-/* Staking small panel */
-.staking-panel{
-  background:var(--card);
-  padding:16px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 10px 38px var(--glow);
+.brand-name {
   width:100%;
-  max-width:480px;
+  max-width:762px;   /* NEVER exceed original image width -> no blur */
+  height:auto;
+  display:block;
+  filter: drop-shadow(0 15px 40px rgba(255,45,251,0.22));
 }
+.subtitle { color:var(--muted); font-size:18px; margin:0; text-align:center; max-width:920px; }
 
-.small{
-  color:var(--muted);
-  font-size:13px;
-}
+/* CTA */
+.cta-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
+.btn { padding:12px 18px; border-radius:12px; font-weight:800; color:#150022; background:var(--cta); border:none; cursor:pointer; box-shadow:0 10px 34px var(--glow); transition: transform .12s; }
+.btn:hover { transform: translateY(-4px) scale(1.02); }
 
-/* Plans Row */
-.plans-row{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  padding:10px;
-}
+/* info cards */
+.home-cards { display:flex; gap:14px; justify-content:center; margin-top:22px; flex-wrap:wrap; }
+.card { min-width:220px; max-width:260px; padding:14px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02)); border:1px solid rgba(255,255,255,0.03); text-align:center; box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
+.card h3 { margin:0; color:var(--accent); font-size:18px; }
+.card p { margin:8px 0 0 0; color:var(--muted); font-size:14px; }
 
-/* Plan Card */
-.plan-card{
-  min-width:200px;
-  background:var(--panel);
-  padding:14px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 8px 38px var(--glow);
-  cursor:pointer;
-  transition:0.15s;
-}
-.plan-card:hover{
-  transform:translateY(-5px) scale(1.04);
-  border-color:var(--accent);
-  box-shadow:0 16px 48px var(--glow);
-}
-.plan-card.selected{
-  transform:translateY(-5px) scale(1.06);
-  border-color:var(--accent2);
-}
-.plan-card .days{
-  font-size:20px;
-  font-weight:800;
-}
-.plan-card .apr{
-  color:var(--muted);
-}
+/* footer */
+footer { text-align:center; padding:22px 8px; color:var(--muted); margin-top:40px; }
 
-/* Stake List */
-.stake-row{
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.05);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+/* responsive */
+@media (max-width:900px){
+  .brand-name { max-width:600px; }
+  .card { width:46%; }
 }
-
-/* ===========================================
-   AI STUDIO
-=========================================== */
-#ai-studio{
-  background:var(--panel);
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 12px 42px var(--glow);
-}
-
-.ai-card{
-  padding:16px;
-  background:var(--card);
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 10px 34px var(--glow);
-}
-
-/* ===========================================
-   TEAM
-=========================================== */
-.team-card{
-  width:210px;
-  padding:16px;
-  text-align:center;
-  border-radius:14px;
-  background:var(--card);
-  box-shadow:0 10px 38px var(--glow);
-  border:1px solid rgba(255,255,255,0.1);
-}
-.team-card img{
-  width:100%;
-  border-radius:50%;
-}
-
-/* ===========================================
-   FOOTER
-=========================================== */
-footer{
-  text-align:center;
-  padding:22px;
-  color:var(--muted);
-  margin-top:28px;
-  font-size:14px;
+@media (max-width:520px){
+  .brand-name { max-width:350px; }
+  .card { width:100%; }
+  .nav-links { display:none; } /* keep navbar minimal on small screens */
 }
 </style>
 </head>
-
 <body>
 
-<!-- ===========================================
-     NAVBAR
-=========================================== -->
-<div class="navbar">
-  <a href="#home"><img src="assets/logo.png" class="logo"></a>
-  <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#token">Token</a></li>
-    <li><a href="#mint">Mint</a></li>
-    <li><a href="#staking">Staking</a></li>
-    <li><a href="#ai-studio">AI Studio</a></li>
-    <li><a href="#team">Team</a></li>
-  </ul>
-</div>
-
-<main>
-
-<!-- ===========================================
-     HERO
-=========================================== -->
-<section class="hero">
-  <img src="assets/hero_iimage.png" class="hero-img">
-  <div>
-    <h1>ShitzuInu</h1>
-    <p>Neon-powered Meme Token • Staking • AI Studio</p>
-    <div style="margin-top:10px;">
-      <a class="btn" href="#mint">Mint Tokens</a>
-      <a class="btn" href="#staking" style="margin-left:10px;">Stake LEO</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===========================================
-     TOKEN INFO
-=========================================== -->
-<section id="token">
-  <h2 style="color:var(--accent)">Token Info</h2>
-  <div class="token-cards">
-    <div class="token-card">
-      <h3>Total Supply</h3>
-      <p>1 Quadrillion</p>
-    </div>
-    <div class="token-card">
-      <h3>Symbol</h3>
-      <p>LEO</p>
-    </div>
-    <div class="token-card">
-      <h3>Blockchain</h3>
-      <p>Ethereum / Base</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===========================================
-     MINT
-=========================================== -->
-<section id="mint">
-  <h2 style="color:var(--accent)">Mint Tokens</h2>
-  <p class="small">Mint directly from unminted supply. No burn on mint.</p>
-
-  <div class="mint-form">
-    <input id="walletInput" placeholder="Your Wallet Address (optional)">
-    <input id="amountInput" type="number" placeholder="Amount">
-    <button id="mintBtn" class="btn">Mint</button>
-  </div>
-
-  <div id="mintStatus" style="margin-top:10px;color:var(--muted)"></div>
-</section>
-
-<!-- ===========================================
-     STAKING (NEON STYLE)
-=========================================== -->
-<section id="staking">
-  <h2 style="color:var(--accent)">Staking</h2>
-  <p class="small">Stake LEO tokens, earn rewards. All neon style.</p>
-
-  <div class="staking-wrap">
-
-    <!-- LEFT -->
-    <div class="staking-panel">
-      <div><strong>Staking Contract:</strong><br>
-        <span style="color:var(--muted);word-break:break-all">
-          0xD846d8f2dC9220eA8322e133CC7eac75cDC5461E
-        </span>
-      </div>
-
-      <div style="margin-top:10px;"><strong>Token (LEO):</strong><br>
-        <span style="color:var(--muted);word-break:break-all">
-          0x22785B80dcf65A2ECB99b3ca2D599312206AaA23
-        </span>
-      </div>
-
-      <button id="connectBtn" class="btn" style="margin-top:14px;">Connect Wallet</button>
-      <div id="connectedAddr" style="margin-top:6px;color:var(--muted)"></div>
-
-      <hr style="opacity:0.2;margin:16px 0;">
-
-      <div class="small"><strong>Wallet Balance:</strong> <span id="leoBalance">—</span></div>
-      <div class="small" style="margin-top:4px;"><strong>Total Staked:</strong> <span id="stakedBalance">—</span></div>
-      <div class="small" style="margin-top:4px;"><strong>Pending Rewards:</strong> <span id="pendingRewards">—</span></div>
+  <!-- NAV -->
+  <header class="navbar">
+    <div class="nav-left">
+      <!-- use the remote image link you provided for navbar logo -->
+      <a href="index.html"><img src="https://shitzuinuofficial-ui.github.io/shitzuInuLogo.png" alt="ShitzuInu Logo" class="logo"></a>
     </div>
 
-    <!-- RIGHT -->
-    <div class="staking-panel">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="token.html">Token</a></li>
+        <li><a href="mint.html">Mint</a></li>
+        <li><a href="staking.html">Staking</a></li>
+        <li><a href="ai-studio.html">AI Studio</a></li>
+        <li><a href="team.html">Team</a></li>
+      </ul>
+    </nav>
+  </header>
 
-      <label style="font-weight:700;">Stake Amount</label>
-      <input id="stakeAmount" type="number" placeholder="e.g. 1000" 
-        style="width:100%;padding:12px;border-radius:10px;background:#270036;border:1px solid rgba(255,255,255,0.1);color:white;">
+  <main>
+    <!-- HERO (Home only) -->
+    <section class="hero">
+      <!-- main page header uses the remote hosted name PNG (max-width prevents blur) -->
+      <img src="https://shitzuinuofficial-ui.github.io/shitzuInuname.png" alt="ShitzuInu" class="brand-name">
 
-      <label style="font-weight:700;margin-top:12px;">Choose Lock Plan</label>
-      <div id="plansContainer" class="plans-row"></div>
-
-      <div style="display:flex;gap:10px;margin-top:12px;">
-        <button id="approveBtn" class="btn" style="flex:1;background:#9b4dff;">Approve</button>
-        <button id="stakeBtn" class="btn" style="flex:1;">Stake</button>
-      </div>
-
-      <div style="display:flex;gap:10px;margin-top:12px;">
-        <button id="claimBtn" class="btn" style="flex:1;background:#9b4dff;">Claim All</button>
-        <button id="unstakeBtn" class="btn" style="flex:1;background:#9b4dff;">Withdraw</button>
-      </div>
-
-      <div id="stakeStatus" style="margin-top:12px;color:var(--muted)"></div>
-      <hr style="opacity:0.2;margin:16px 0;">
-
-      <h4 style="color:var(--accent);margin:0 0 10px 0;">Your Stakes</h4>
-      <div id="stakesList" style="max-height:260px;overflow:auto;"></div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===========================================
-     AI STUDIO
-=========================================== -->
-<section id="ai-studio">
-  <h1 style="color:var(--accent);text-align:center;">SHITZUINU AI STUDIO</h1>
-  <p style="text-align:center;color:var(--muted);">AI x Web3 Meme Power</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px;">
-
-    <div class="ai-card">
-      <h3 style="color:var(--accent2)">Social Media Post</h3>
-      <p class="small"><strong>Input:</strong> Make a crypto viral post</p>
-      <p style="color:#ffd6ff;">
-        “Crypto isn’t the future… it’s the upgrade we were always waiting for.”
+      <p class="subtitle">
+        Neon-powered meme token. Stake to earn LEO rewards. Create viral AI content with ShitzuInu AI Studio.
+        Use the navigation to open Token / Mint / Staking / AI Studio & Team pages.
       </p>
-    </div>
 
-    <div class="ai-card">
-      <h3 style="color:var(--accent2)">Before & After — AI Fix</h3>
-      <p class="small"><strong>Before:</strong> this token good and will grow big.</p>
-      <p style="color:#ffd6ff;"><strong>After:</strong> ShitzuInu is a community-first token with expanding utilities.</p>
-    </div>
+      <div class="cta-row">
+        <a href="mint.html" class="btn">Mint Test Tokens</a>
+        <a href="staking.html" class="btn">Go to Staking</a>
+      </div>
 
-    <div class="ai-card">
-      <h3 style="color:var(--accent2)">Crypto Analysis</h3>
-      <p style="color:#ffd6ff;">Bitcoin whales accumulated 19,200 BTC during dips.</p>
-    </div>
+      <div class="home-cards" aria-hidden="false">
+        <div class="card">
+          <h3>Total Supply</h3>
+          <p>1 Quadrillion</p>
+        </div>
+        <div class="card">
+          <h3>Symbol</h3>
+          <p>LEO</p>
+        </div>
+        <div class="card">
+          <h3>Chain</h3>
+          <p>Ethereum / Base</p>
+        </div>
+      </div>
+    </section>
 
-  </div>
-</section>
-
-<!-- ===========================================
-     TEAM
-=========================================== -->
-<section id="team">
-  <h2 style="color:var(--accent)">Team</h2>
-  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:12px;">
-
-    <div class="team-card">
-      <img src="assets/team/member1.png">
-      <h3 style="color:var(--accent)">Member 1</h3>
-      <p class="small">Founder</p>
-    </div>
-
-    <div class="team-card">
-      <img src="assets/team/member2.png">
-      <h3 style="color:var(--accent)">Member 2</h3>
-      <p class="small">Developer</p>
-    </div>
-
-    <div class="team-card">
-      <img src="assets/team/member3.png">
-      <h3 style="color:var(--accent)">Member 3</h3>
-      <p class="small">Marketing</p>
-    </div>
-
-  </div>
-</section>
-
-</main>
-
-<!-- ===========================================
-     FOOTER
-=========================================== -->
-<footer>
-  <img src="assets/logo.png" style="height:40px;margin-bottom:10px;">
-  <div>© 2025 ShitzuInu. All rights reserved.</div>
-</footer>
+    <footer>
+      <!-- footer also uses the name PNG but smaller; using the same hosted link -->
+      <img src="https://shitzuinuofficial-ui.github.io/shitzuInuname.png" alt="ShitzuInu" style="width:220px; max-width:70%; height:auto; display:block; margin:0 auto 10px; opacity:0.9;">
+      <div>&copy; 2025 ShitzuInu — All rights reserved</div>
+    </footer>
+  </main>
 
 </body>
 </html>
